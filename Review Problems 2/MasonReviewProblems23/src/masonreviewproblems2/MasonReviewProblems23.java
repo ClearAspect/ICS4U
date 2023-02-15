@@ -2,7 +2,7 @@
 Roan Mason
 02/10/23
 */
-package masonreviewproblems23;
+package masonreviewproblems2;
 
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;

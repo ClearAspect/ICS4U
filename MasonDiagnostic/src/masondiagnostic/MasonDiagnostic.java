@@ -52,7 +52,7 @@ public class MasonDiagnostic {
         String line;
         int sLength;
         try {
-            File f = new File("src/masondiagnostic/Data.txt");
+            File f = new File("src/masondiagnostic/pkg1/Data.txt");
             Scanner s = new Scanner(f);
             while (s.hasNextLine()) {
                 line = s.nextLine();
