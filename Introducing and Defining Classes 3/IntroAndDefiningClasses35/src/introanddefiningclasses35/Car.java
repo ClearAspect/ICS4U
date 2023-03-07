@@ -41,13 +41,19 @@ public class Car {
         pen = new StandardPen(500,500);
         pen.setColor(carColor);
     }
-
+    
+    /**
+     * Draw the car
+     */
     public void drawCar() {
         
         double x = size;
         double y = size/2;
         double r = size/7;
+        
+        
         pen.up();
+        pen.move(xPos, yPos);
         pen.setDirection(180);
         pen.down();
         pen.move(x/2);
@@ -71,12 +77,31 @@ public class Car {
         pen.move(y/2);   
         
         // Draw the wheels
-        drawCircle(x*1/3,-y*4/5, r);
-        drawCircle(-x*1/3,-y*4/5, r);
+        drawCircle(x*1/3+xPos,-y*4/5+yPos, r);
+        drawCircle(-x*1/3+xPos,-y*4/5+yPos, r);
 
         // Move the turtle to the starting position
         
 
+    }
+    
+    /**
+     * Erase the car
+     */
+    public void erase(){
+        pen.setColor(Color.white);
+        drawCar();
+        pen.setColor(carColor);
+    }
+    
+    /**
+     * Move to new position
+     * @param x - x position
+     * @param y - y position
+     */
+    public void move(double x, double y){
+        xPos = x;
+        yPos = y;
     }
     
     /**
