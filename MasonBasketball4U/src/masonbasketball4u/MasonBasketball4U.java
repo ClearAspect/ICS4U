@@ -100,7 +100,7 @@ public class MasonBasketball4U {
                 if (choice.equalsIgnoreCase("1")) {
                     viewTeamMenu(teams);
                 } else if (choice.equalsIgnoreCase("2")) {
-                    simGameMenu(teams);
+                    simSelect1(teams);
                 } else {
                     showMsg("Sorry, I didn't understand that...");
                 }
@@ -116,7 +116,7 @@ public class MasonBasketball4U {
 
         }
         msg += "\nOr type \"b\" to go back.";
-        String choice = "z";
+        String choice = "";
         String teamStat;
         while (!choice.equalsIgnoreCase("b")) {
             choice = input(msg);
@@ -155,16 +155,41 @@ public class MasonBasketball4U {
 
     }
 
-    public static void simGameMenu(Team[] teams) {
-        String msg = "Select a team:\n\n";
+    public static void simSelect1(Team[] teams) {
+        String msg = "Select a team:\n";
         boolean done = false;
         for (Team team : teams) {
             msg += "-" + team.getTeamName() + "\n";
         }
-        String choice = "z";
+        String choice;
         while (!done) {
             choice = input(msg);
             if (isValidTeam(choice, teams)) {
+                simSelect2(teams, choice);
+                done = true;
+            } else {
+                showMsg("I couldn't find \"" + choice + "\", please try again...");
+            }
+
+        }
+
+    }
+    
+    public static void simSelect2(Team[] teams, String choice1) {
+        String msg = "Select a team:\n";
+        boolean done = false;
+        for (Team team : teams) {
+            if (!team.getTeamName().equalsIgnoreCase(choice1)) {
+                msg += "-" + team.getTeamName() + "\n";
+
+            }
+        }
+        String choice;
+        while (!done) {
+            choice = input(msg);
+            if (isValidTeam(choice, teams)) {
+                
+                done = true;
             } else {
                 showMsg("I couldn't find \"" + choice + "\", please try again...");
             }

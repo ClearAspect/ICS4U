@@ -39,6 +39,10 @@ public class Team {
         int score = (int) (Math.random() * factor) + 75;
         return score;
     }
+    
+    public String getTeamName() {
+        return name;
+    }
 
     public void setNumOfWins(int numOfWins) {
         this.numOfWins = numOfWins;
@@ -79,7 +83,7 @@ public class Team {
         String string = "Team name: "+name
                 +"\n\nRecord: W:"+numOfWins+" L:"+numOfLosses;
         for (Player player : players) {
-            string += "\n"+player;
+            string += "\n\n"+player;
         }
         return string;
     }
