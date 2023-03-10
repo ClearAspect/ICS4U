@@ -10,12 +10,16 @@ import javax.swing.JOptionPane;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author roanm
  */
 public class MasonBasketball4U {
+    
+    public static ImageIcon image = new ImageIcon("src/masonbasketball4u/bb4uIcon.png");
 
     /**
      * @param args the command line arguments
@@ -31,7 +35,7 @@ public class MasonBasketball4U {
      * @param msg - Message in window
      */
     public static void showMsg(String msg) {
-        JOptionPane.showMessageDialog(null, msg);
+        JOptionPane.showMessageDialog(null, msg, "Basketball4U", 0,image);
     }
 
     /**
@@ -42,7 +46,7 @@ public class MasonBasketball4U {
      */
     public static String input(String msg) {
         String choice;
-        choice = JOptionPane.showInputDialog(msg);
+        choice = (String) JOptionPane.showInputDialog(null, msg, "Basketball4U", 0, image, null, "");
         return choice;
     }
 
@@ -52,7 +56,7 @@ public class MasonBasketball4U {
         Player[] players;
         String teamName, playerName;
         int numOfWins, numOfLosses, speed, threePointers, dunk, defense;
-
+        
         try {
             File f = new File("src/masonbasketball4u/ball.4u");
             Scanner s = new Scanner(f);
@@ -251,36 +255,34 @@ public class MasonBasketball4U {
 
     public static void playerMenu(Team[] teams) {
         String choice = "";
-        int playerIndex = -1;
+        int teamIndex = 0, playerIndex = -1;
         Player request;
+        Player[] players;
+        boolean playerFound;
         while (!choice.equalsIgnoreCase("b")) {
             choice = input("Enter a player name to search for\nOr type \"b\" to go back.");
-            if (!choice.equalsIgnoreCase("b") && isValidPlayer(choice, teams)) {
+            playerFound = false;
+            if (!choice.equalsIgnoreCase("b")) {
                 for (int i = 0; i < teams.length; i++) {
                     playerIndex = teams[i].getPlayerIndex(choice);
                     if (playerIndex != -1) {
-                        request = teams[i].getPlayer(playerIndex);
+                        playerFound = true;
+                        teamIndex = i;
                         i = teams.length;
-                        showMsg(request.toString());
                     }
-                    
+
+                }
+                if (playerFound) {
+                    players = teams[teamIndex].getPlayers();
+                    request = players[playerIndex];
+                    showMsg("FOUND!\nTeam: " + teams[teamIndex].getTeamName() + "\n" + request.toString());
+                } else {
+                    showMsg("I couldn't find \"" + choice + "\", please try again...");
                 }
 
             }
 
         }
-
-    }
-
-    public static boolean isValidPlayer(String name, Team[] teams) {
-        int index;
-        for (Team team : teams) {
-            index = team.getPlayerIndex(name);
-            if (index != -1) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }
