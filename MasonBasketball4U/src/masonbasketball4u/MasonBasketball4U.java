@@ -84,6 +84,7 @@ public class MasonBasketball4U {
                 }
             }
         }
+        showMsg("Later gator!");
     }
 
     public static void teamMenu(Team[] teams) {
@@ -188,7 +189,7 @@ public class MasonBasketball4U {
         while (!done) {
             choice = input(msg);
             if (isValidTeam(choice, teams)) {
-                
+                simMenu(choice1, choice, teams);
                 done = true;
             } else {
                 showMsg("I couldn't find \"" + choice + "\", please try again...");
@@ -196,6 +197,47 @@ public class MasonBasketball4U {
 
         }
 
+    }
+    
+    public static void simMenu(String choice1, String choice2, Team[] teams) {
+        int teamOneIndex = getTeamIndex(choice1, teams);
+        int teamTwoIndex = getTeamIndex(choice2, teams);
+        choice1 = teams[teamOneIndex].getTeamName();
+        choice2 = teams[teamTwoIndex].getTeamName();
+        showMsg("Ready to sim?"
+                + "\n"+choice1+" - W: "+teams[teamOneIndex].getNumOfWins()+" - L: "+teams[teamOneIndex].getNumOfLosses()
+                + "\n\n  ******VS******"
+                + "\n\n"+choice2+" - W: "+teams[teamTwoIndex].getNumOfWins()+" - L: "+teams[teamTwoIndex].getNumOfLosses());
+        int teamOneScore = teams[teamOneIndex].getScore();
+        int teamTwoScore = teams[teamTwoIndex].getScore();
+        String result = "Game results:\n";
+        if (teamOneScore == teamTwoScore) {
+            result += choice1+"(W: "+teams[teamOneIndex].getNumOfWins()+" - L: "+teams[teamOneIndex].getNumOfLosses()+")"
+                    + "\n\n ******have Tied******"
+                    + "\n\n"+choice2+"(W: "+teams[teamTwoIndex].getNumOfWins()+" - L: "+teams[teamTwoIndex].getNumOfLosses()+")"
+                    + "\n\nBy a score of "+teamOneScore+" to "+teamTwoScore;
+            
+        } else if (teamOneScore > teamTwoScore) {
+            teams[teamOneIndex].setNumOfWins(teams[teamOneIndex].getNumOfWins()+1);
+            teams[teamTwoIndex].setNumOfLosses(teams[teamTwoIndex].getNumOfLosses()+1);
+            result += choice1+"(W: "+teams[teamOneIndex].getNumOfWins()+" - L: "+teams[teamOneIndex].getNumOfLosses()+")"
+                    + "\n\n ******have defeated******"
+                    + "\n\n"+choice2+"(W: "+teams[teamTwoIndex].getNumOfWins()+" - L: "+teams[teamTwoIndex].getNumOfLosses()+")"
+                    + "\n\nBy a score of "+teamOneScore+" to "+teamTwoScore;
+            
+            
+        } else {
+            teams[teamTwoIndex].setNumOfWins(teams[teamTwoIndex].getNumOfWins()+1);
+            teams[teamOneIndex].setNumOfLosses(teams[teamOneIndex].getNumOfLosses()+1);
+            result += choice2+"(W: "+teams[teamTwoIndex].getNumOfWins()+" - L: "+teams[teamTwoIndex].getNumOfLosses()+")"
+                    + "\n\n ******have defeated******"
+                    + "\n\n"+choice1+"(W: "+teams[teamOneIndex].getNumOfWins()+" - L: "+teams[teamOneIndex].getNumOfLosses()+")"
+                    + "\n\nBy a score of "+teamTwoScore+" to "+teamOneScore;
+
+        }
+        showMsg(result);
+
+        
     }
 
     public static void playerMenu() {
