@@ -25,10 +25,21 @@ public class MasonBasketball4U {
         mainMenu(readData());
     }
 
+    /**
+     * Helper method for JOptionPane output
+     *
+     * @param msg - Message in window
+     */
     public static void showMsg(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }
 
+    /**
+     * Helper method for JOptionPane input
+     *
+     * @param msg - Message in window
+     * @return
+     */
     public static String input(String msg) {
         String choice;
         choice = JOptionPane.showInputDialog(msg);
@@ -62,7 +73,7 @@ public class MasonBasketball4U {
                 }
                 teams[i] = new Team(teamName, players, numOfWins, numOfLosses);
             }
-            
+
         } catch (FileNotFoundException e) {
             System.out.println("Error: " + e);
         }
@@ -78,7 +89,7 @@ public class MasonBasketball4U {
                 if (choice.equalsIgnoreCase("1")) {
                     teamMenu(teams);
                 } else if (choice.equalsIgnoreCase("2")) {
-                    teamMenu(teams);
+                    playerMenu(teams);
                 } else {
                     showMsg("Sorry, I didn't understand that...");
                 }
@@ -175,7 +186,7 @@ public class MasonBasketball4U {
         }
 
     }
-    
+
     public static void simSelect2(Team[] teams, String choice1) {
         String msg = "Select a team:\n";
         boolean done = false;
@@ -198,50 +209,78 @@ public class MasonBasketball4U {
         }
 
     }
-    
+
     public static void simMenu(String choice1, String choice2, Team[] teams) {
         int teamOneIndex = getTeamIndex(choice1, teams);
         int teamTwoIndex = getTeamIndex(choice2, teams);
         choice1 = teams[teamOneIndex].getTeamName();
         choice2 = teams[teamTwoIndex].getTeamName();
         showMsg("Ready to sim?"
-                + "\n"+choice1+" - W: "+teams[teamOneIndex].getNumOfWins()+" - L: "+teams[teamOneIndex].getNumOfLosses()
+                + "\n" + choice1 + " - W: " + teams[teamOneIndex].getNumOfWins() + " - L: " + teams[teamOneIndex].getNumOfLosses()
                 + "\n\n  ******VS******"
-                + "\n\n"+choice2+" - W: "+teams[teamTwoIndex].getNumOfWins()+" - L: "+teams[teamTwoIndex].getNumOfLosses());
+                + "\n\n" + choice2 + " - W: " + teams[teamTwoIndex].getNumOfWins() + " - L: " + teams[teamTwoIndex].getNumOfLosses());
         int teamOneScore = teams[teamOneIndex].getScore();
         int teamTwoScore = teams[teamTwoIndex].getScore();
         String result = "Game results:\n";
         if (teamOneScore == teamTwoScore) {
-            result += choice1+"(W: "+teams[teamOneIndex].getNumOfWins()+" - L: "+teams[teamOneIndex].getNumOfLosses()+")"
+            result += choice1 + "(W: " + teams[teamOneIndex].getNumOfWins() + " - L: " + teams[teamOneIndex].getNumOfLosses() + ")"
                     + "\n\n ******have Tied******"
-                    + "\n\n"+choice2+"(W: "+teams[teamTwoIndex].getNumOfWins()+" - L: "+teams[teamTwoIndex].getNumOfLosses()+")"
-                    + "\n\nBy a score of "+teamOneScore+" to "+teamTwoScore;
-            
+                    + "\n\n" + choice2 + "(W: " + teams[teamTwoIndex].getNumOfWins() + " - L: " + teams[teamTwoIndex].getNumOfLosses() + ")"
+                    + "\n\nBy a score of " + teamOneScore + " to " + teamTwoScore;
+
         } else if (teamOneScore > teamTwoScore) {
-            teams[teamOneIndex].setNumOfWins(teams[teamOneIndex].getNumOfWins()+1);
-            teams[teamTwoIndex].setNumOfLosses(teams[teamTwoIndex].getNumOfLosses()+1);
-            result += choice1+"(W: "+teams[teamOneIndex].getNumOfWins()+" - L: "+teams[teamOneIndex].getNumOfLosses()+")"
+            teams[teamOneIndex].setNumOfWins(teams[teamOneIndex].getNumOfWins() + 1);
+            teams[teamTwoIndex].setNumOfLosses(teams[teamTwoIndex].getNumOfLosses() + 1);
+            result += choice1 + "(W: " + teams[teamOneIndex].getNumOfWins() + " - L: " + teams[teamOneIndex].getNumOfLosses() + ")"
                     + "\n\n ******have defeated******"
-                    + "\n\n"+choice2+"(W: "+teams[teamTwoIndex].getNumOfWins()+" - L: "+teams[teamTwoIndex].getNumOfLosses()+")"
-                    + "\n\nBy a score of "+teamOneScore+" to "+teamTwoScore;
-            
-            
+                    + "\n\n" + choice2 + "(W: " + teams[teamTwoIndex].getNumOfWins() + " - L: " + teams[teamTwoIndex].getNumOfLosses() + ")"
+                    + "\n\nBy a score of " + teamOneScore + " to " + teamTwoScore;
+
         } else {
-            teams[teamTwoIndex].setNumOfWins(teams[teamTwoIndex].getNumOfWins()+1);
-            teams[teamOneIndex].setNumOfLosses(teams[teamOneIndex].getNumOfLosses()+1);
-            result += choice2+"(W: "+teams[teamTwoIndex].getNumOfWins()+" - L: "+teams[teamTwoIndex].getNumOfLosses()+")"
+            teams[teamTwoIndex].setNumOfWins(teams[teamTwoIndex].getNumOfWins() + 1);
+            teams[teamOneIndex].setNumOfLosses(teams[teamOneIndex].getNumOfLosses() + 1);
+            result += choice2 + "(W: " + teams[teamTwoIndex].getNumOfWins() + " - L: " + teams[teamTwoIndex].getNumOfLosses() + ")"
                     + "\n\n ******have defeated******"
-                    + "\n\n"+choice1+"(W: "+teams[teamOneIndex].getNumOfWins()+" - L: "+teams[teamOneIndex].getNumOfLosses()+")"
-                    + "\n\nBy a score of "+teamTwoScore+" to "+teamOneScore;
+                    + "\n\n" + choice1 + "(W: " + teams[teamOneIndex].getNumOfWins() + " - L: " + teams[teamOneIndex].getNumOfLosses() + ")"
+                    + "\n\nBy a score of " + teamTwoScore + " to " + teamOneScore;
 
         }
         showMsg(result);
 
-        
     }
 
-    public static void playerMenu() {
+    public static void playerMenu(Team[] teams) {
+        String choice = "";
+        int playerIndex = -1;
+        Player request;
+        while (!choice.equalsIgnoreCase("b")) {
+            choice = input("Enter a player name to search for\nOr type \"b\" to go back.");
+            if (!choice.equalsIgnoreCase("b") && isValidPlayer(choice, teams)) {
+                for (int i = 0; i < teams.length; i++) {
+                    playerIndex = teams[i].getPlayerIndex(choice);
+                    if (playerIndex != -1) {
+                        request = teams[i].getPlayer(playerIndex);
+                        i = teams.length;
+                        showMsg(request.toString());
+                    }
+                    
+                }
 
+            }
+
+        }
+
+    }
+
+    public static boolean isValidPlayer(String name, Team[] teams) {
+        int index;
+        for (Team team : teams) {
+            index = team.getPlayerIndex(name);
+            if (index != -1) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

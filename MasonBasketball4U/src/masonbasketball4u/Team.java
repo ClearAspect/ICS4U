@@ -78,6 +78,10 @@ public class Team {
         }
         return -1;
     }
+    
+    public Player getPlayer(int index) {
+        return players[index];
+    }
 
     public String toString() {
         String string = "Team name: "+name
