@@ -15,14 +15,29 @@ public class Team {
     private String name;
     private int numOfWins, numOfLosses;
     private Player[] players;
-
+    
+    /**
+     * Constructor that creates team with a name and set of players
+     * @param name - team name
+     * @param players - array of players Player[] object
+     */
     public Team(String name, Player[] players) {
+        //setting attributes
         this.name = name;
         this.players = players;
+        
+        //default team stats
         numOfWins = 0;
         numOfLosses = 0;
     }
-
+    
+    /**
+     * Constructor that creates a team with a name, set of players and stats
+     * @param name - team name
+     * @param players - array of players Player[] object
+     * @param numOfWins - amount of wins the team has
+     * @param numOfLosses - amount of losses the team has
+     */
     public Team(String name, Player[] players, int numOfWins, int numOfLosses) {
         this(name, players);
         this.numOfWins = numOfWins;
@@ -30,36 +45,72 @@ public class Team {
         this.players = players;
     }
 
+    /**
+     * Generate a score that the team would get in a game based on the player
+     * stats
+     *
+     * @return
+     */
     public int getScore() {
         int totalScore = 0;
-        for (Player player : players) {
+        for (Player player : players) { //cycle through players
+            //add their stats to the total
             totalScore += player.getDefense() + player.getDunk() + player.getSpeed() + player.getThreePointers();
         }
-        double factor = totalScore / 4;
+        double factor = totalScore / 4; //divid total by 4
+        /*
+        generate a random number higher than 75 but no higher than 
+        the factor previously calculated
+         */
         int score = (int) (Math.random() * factor) + 75;
         return score;
     }
-    
+
+    /**
+     * return the team name
+     * @return 
+     */
     public String getTeamName() {
         return name;
     }
 
+    /**
+     * Change the number of wins stat
+     * @param numOfWins - an integer
+     */
     public void setNumOfWins(int numOfWins) {
         this.numOfWins = numOfWins;
     }
 
+    /**
+     * return the number of wins 
+     * @return 
+     */
     public int getNumOfWins() {
         return numOfWins;
     }
 
+    /**
+     * Change the number of losses
+     * @param numOfLosses - an integer
+     */
     public void setNumOfLosses(int numOfLosses) {
         this.numOfLosses = numOfLosses;
     }
 
+    /**
+     * return the number of losses
+     * @return 
+     */
     public int getNumOfLosses() {
         return numOfLosses;
     }
 
+    /**
+     * Trade player by exchange player o
+     * @param other
+     * @return 
+     */
     public Player trade(Player other) {
         Player traded;
         int playerIndex = (int)(Math.random() * 5);
@@ -79,8 +130,8 @@ public class Team {
         return -1;
     }
     
-    public Player getPlayer(int index) {
-        return players[index];
+    public Player[] getPlayers() {
+        return players;
     }
 
     public String toString() {
