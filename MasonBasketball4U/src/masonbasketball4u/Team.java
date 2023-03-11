@@ -107,33 +107,44 @@ public class Team {
     }
 
     /**
-     * Trade player by exchange player o
+     * Passed traded player as a parameter then return the player it's being traded with
      * @param other
      * @return 
      */
     public Player trade(Player other) {
-        Player traded;
+        Player traded; //variable for traded player storage
         int playerIndex = (int)(Math.random() * 5);
         traded = players[playerIndex];
         players[playerIndex] = other;
         return traded;
     }
-
+    
+    /**
+     * Searches for player with matching name
+     * @param playerName - name they want to find
+     * @return 
+     */
     public int getPlayerIndex(String playerName) {
-        int index = 0;
-        for (Player player : players) {
-            if (player.getName().equalsIgnoreCase(playerName)) {
-                return index;
+        for (int i = 0; i < players.length; i++) { //cycle through players 
+            if (players[i].getName().equalsIgnoreCase(playerName)) { //if the name matches the request name
+                return i; //return the index
             }
-            index++;
         }
-        return -1;
+        return -1; //otherwise return -1 for an unfound name
     }
     
+    /**
+     * return the array for players
+     * @return 
+     */
     public Player[] getPlayers() {
         return players;
     }
 
+    /**
+     * return object as a string
+     * @return 
+     */
     public String toString() {
         String string = "Team name: "+name
                 +"\n\nRecord: W:"+numOfWins+" L:"+numOfLosses;
