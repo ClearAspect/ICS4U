@@ -302,11 +302,30 @@ public class MasonBasketball4U {
 
     }
 
+    public static void playerMenu(Team[] teams) {
+        String choice = "";
+        while (!choice.equalsIgnoreCase("b")) { //while user isnt done
+            choice = input("What would you like to do?\n1. View player\n2. View trade\nOr type \"b\" to go back."); //get input
+            if (!choice.equalsIgnoreCase("b")) { //if user isnt done
+                if (choice.equalsIgnoreCase("1")) { //if user wants to see player menu
+                    viewPlayerMenu(teams); 
+                } else if (choice.equalsIgnoreCase("2")) { //if user wants to see trade menu
+                    viewTradeMenu(teams);
+                } else { //if not a valid response
+                    showMsg("Sorry, I didn't understand that...");
+                }
+            }
+        }
+        
+        
+    }
+    
+    
     /**
      * player menu
      * @param teams - array of teams
      */
-    public static void playerMenu(Team[] teams) {
+    public static void viewPlayerMenu(Team[] teams) {
         String choice = "";
         int teamIndex = 0, playerIndex = -1;
         Player request;
@@ -341,5 +360,57 @@ public class MasonBasketball4U {
 
         }
     }
+    
+    public static void viewTradeMenu(Team[] teams) {
+        String choice = "";
+        int teamIndex = 0, playerIndex = -1;
+        Player[] players;
+        boolean playerFound;
+        while (!choice.equalsIgnoreCase("b")) {
+            choice = input("Enter a player name to trade out\nOr type \"b\" to go back.");
+            playerFound = false;
+            if (!choice.equalsIgnoreCase("b")) { //if user isnt done
+                /*
+                basically just checks to find find the player
+                if the index doesnt = -1 then the player exists and the loop stops
+                */
+                for (int i = 0; i < teams.length; i++) {
+                    playerIndex = teams[i].getPlayerIndex(choice);
+                    if (playerIndex != -1) {
+                        playerFound = true;
+                        teamIndex = i;
+                        i = teams.length;
+                    }
 
+                }
+                if (playerFound) { //if a player is found then output their team and stats
+                    players = teams[teamIndex].getPlayers(); 
+                    players[playerIndex] = genPlayer(input("Enter the name of the new player")); //generate a new player and replace it with the old one
+                    showMsg("Done!\nPlayer has been traded to: " + teams[teamIndex].getTeamName());
+                } else { //if no player is found then tell the user it wasnt found
+                    showMsg("I couldn't find \"" + choice + "\", please try again...");
+                }
+
+            }
+
+        }
+    }
+    
+    /**
+     * generate new random player with random stats
+     * @param playerName - name of player
+     * @return 
+     */
+    public static Player genPlayer(String playerName) {
+        
+        Player newPlayer = new Player(playerName);
+        newPlayer.setDefense((int) (Math.random() * 10) + 1);
+        newPlayer.setDunk((int) (Math.random() * 10) + 1);
+        newPlayer.setSpeed((int) (Math.random() * 10) + 1);
+        newPlayer.setThreePointers((int) (Math.random() * 10) + 1);
+        
+        
+        return newPlayer;
+    }
+    
 }
