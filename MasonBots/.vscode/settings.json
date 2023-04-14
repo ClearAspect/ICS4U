@@ -1,0 +1,17 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "/Users/roanm/Documents/Computer Science/**/*.jar"
+        ],
+        "exclude": [
+            "/Users/roanm/Documents/Computer Science/ICS4U/CCC 2023 Problems/Trianglane Problem/dist/Trianglane_Problem.jar",
+            "/Users/roanm/Documents/Computer Science/2D game/UntitledGame/gradle/wrapper/gradle-wrapper.jar",
+            "/Users/roanm/Documents/Computer Science/Saved Java Packages/packageFolder/mbsgui.jar",
+            "/Users/roanm/Documents/Computer Science/Saved Java Packages/packageFolder/mbsbb.jar"
+        ]
+    }
+}

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="packageFolder">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../Saved Java Packages/packageFolder" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../Saved Java Packages/packageFolder" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../../Saved Java Packages/packageFolder" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../Saved Java Packages/packageFolder" recursive="false" type="SOURCES" />
+  </library>
+</component>

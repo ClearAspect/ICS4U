@@ -1,0 +1,10 @@
+run
+display
+eat
+jump
+laugh
+smile
+walk
+sing
+read
+cook
