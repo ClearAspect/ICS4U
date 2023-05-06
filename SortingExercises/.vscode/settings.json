@@ -1,0 +1,12 @@
+{
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "/Users/roanm/Documents/Computer Science/Saved Java Packages/packageFolder/**/*.jar"
+        ],
+        "exclude": [
+            "/Users/roanm/Documents/Computer Science/Saved Java Packages/packageFolder/mbsbb.jar",
+            "/Users/roanm/Documents/Computer Science/Saved Java Packages/packageFolder/mbsgui.jar"
+        ]
+    }
+}

@@ -68,21 +68,25 @@ public class DrawingSurface extends JPanel implements Runnable, KeyListener{
         draw(g); //invoke our custom drawing method
     }
     
-    public void update() {
+    public void paddleCollide(Player player) {
+        //Outdated comment
         //If the new right most side of the ball touches player2
         //The y value of the ball is between the y value of player 2
         //change direction (Bounce of of the paddle)
-        if ((ball.getX() + ball.getWidth() + deltaX) > player2.getX() && ball.getY() >= player2.getY() && ball.getY() <= (player2.getY() + player2.getHeight())) {
+        if ((ball.getX() + ball.getWidth() + deltaX) > player.getX() && (ball.getX() + deltaX) < (player.getX() + player.getWidth()) && ball.getY() >= player.getY() && ball.getY() <= (player.getY() + player.getHeight())) {
             deltaX = -deltaX;
         }
-        if ((ball.getX() + deltaX) < (player1.getX() + player1.getWidth()) && ball.getY() >= player1.getY() && ball.getY() <= (player1.getY() + player1.getHeight())) {
-            deltaX = -deltaX;
-        }
+    }
+    
+    public void update() {
+        paddleCollide(player1);
+        paddleCollide(player2);
+        
         
         //Wall detection that doesnt need to be used quite yet
-//        if ((ball.getX() + ball.getWidth() + deltaX) > getWidth() || (ball.getX() + deltaX) < 0) {
-//            deltaX = -deltaX;
-//        }
+        if ((ball.getX() + ball.getWidth() + deltaX) > getWidth() || (ball.getX() + deltaX) < 0) {
+            deltaX = -deltaX;
+        }
         if ((ball.getY() + ball.getHeight() + deltaY) > getHeight() || (ball.getY() + deltaY) < 0) {
             deltaY = -deltaY;
         }

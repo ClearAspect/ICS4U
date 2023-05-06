@@ -12,8 +12,6 @@ import javax.swing.SwingUtilities;
  * @author roanm
  */
 public class GraphicsExercise1 extends JFrame {
-
-    
     /**
      * Default constructor
      */
