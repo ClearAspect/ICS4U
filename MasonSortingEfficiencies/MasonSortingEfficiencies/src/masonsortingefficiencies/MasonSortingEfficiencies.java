@@ -248,6 +248,8 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void sortBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_sortBtnActionPerformed
         // TODO add your handling code here:
 
@@ -261,12 +263,10 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
         } else {
             sorter.setDescending();
         }
-
         
         sort();
 
-    }// GEN-LAST:event_sortBtnActionPerformed
-
+    }
     
     public void sort() {
         int[] bubbleSorted = usedArray.clone();
@@ -275,11 +275,18 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
         int[] quickSorted = usedArray.clone();
         int[] mergeSorted = usedArray.clone();
 
+        resultsTxt.setText("");
+
         sorter.bubbleSort(bubbleSorted);
+        displayResults("Bubble Sort");
         sorter.insertionSort(insertionSorted);
+        displayResults("Insertion Sort");
         sorter.selectionSort(selectionSorted);
+        displayResults("Selection Sort");
         sorter.quickSort(quickSorted, 0, quickSorted.length - 1);
+        displayResults("Quick Sort");
         sorter.mergeSort(mergeSorted, 0, mergeSorted.length - 1);
+        displayResults("Merge Sort");
 
         switch (sortTypeCombo.getSelectedIndex()) {
             case 0: //Bubble Sort
@@ -299,6 +306,18 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
                 break;
         }
         
+    }
+
+    public void displayResults(String sortType) { 
+        String currentResults = resultsTxt.getText();
+        currentResults += 
+        sortType
+        +":\nNumber of times a loop was executed: "+sorter.getLoopCount()
+        +"\nNumber of nanoseconds to complete sort: "+sorter.getNanoTime()+"\n";
+
+
+
+        resultsTxt.setText(currentResults);
     }
 
     public void displayRequestedSort(int[] sortedArray) {

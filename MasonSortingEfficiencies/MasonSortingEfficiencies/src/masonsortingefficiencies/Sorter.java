@@ -1,5 +1,4 @@
 /*
-import java.util.ArrayList;
 Roan Mason
 05/04/2023
 
@@ -13,8 +12,10 @@ public class Sorter {
     // Protected Class Variables
     private boolean ascending = true;
     private long nanoStart, nanoEnd;
+    private int loopCount;
 
     public Sorter(boolean ascending) {
+        this.ascending = ascending;
     }
 
     public void setAscending() {
@@ -33,10 +34,16 @@ public class Sorter {
         return nanoEnd - nanoStart;
     }
 
+    public int getLoopCount() {
+        return loopCount;
+    }
+
     /* State machines that check whether the sort should be in ascending or descending order  */
     //Checks before algorithm is invoked so that there is no loss of speed/efficiency
 
     public void selectionSort(int[] array) {
+        loopCount = 0;
+
         if (ascending) {
             nanoStart = System.nanoTime();
             ascendingSelectionSort(array);
@@ -49,6 +56,8 @@ public class Sorter {
     }
 
     public void bubbleSort(int[] array) {
+        loopCount = 0;
+        
         if (ascending) {
             nanoStart = System.nanoTime();
             ascendingBubbleSort(array);
@@ -61,6 +70,8 @@ public class Sorter {
     }
 
     public void insertionSort(int[] array) {
+        loopCount = 0;
+        
         if (ascending) {
             nanoStart = System.nanoTime();
             ascendingInsertionSort(array);
@@ -73,6 +84,8 @@ public class Sorter {
     }
 
     public void quickSort(int[] array, int low, int high) {
+        loopCount = 0;
+        
         if (ascending) {
             nanoStart = System.nanoTime();
             ascendingQuickSort(array, low, high);
@@ -85,6 +98,8 @@ public class Sorter {
     }
     
     public void mergeSort(int[] array, int low, int high) {
+        loopCount = 0;
+        
         if (ascending) {
             nanoStart = System.nanoTime();
             ascendingMergeSort(array, low, high);
@@ -112,6 +127,7 @@ public class Sorter {
                 if (array[i] < array[minIndex]) {
                     minIndex = i;
                 }
+                loopCount++;
             }
             int temp = array[step];
             array[step] = array[minIndex];
@@ -134,6 +150,7 @@ public class Sorter {
                 if (array[i] > array[minIndex]) {
                     minIndex = i;
                 }
+                loopCount++;
             }
             int temp = array[step];
             array[step] = array[minIndex];
@@ -159,6 +176,7 @@ public class Sorter {
                     array[i + 1] = temp;
                     swapped = true;
                 }
+                loopCount++;
             }
             bottom--;
         }
@@ -181,6 +199,7 @@ public class Sorter {
                     array[i + 1] = temp;
                     swapped = true;
                 }
+                loopCount++;
             }
             bottom--;
         }
@@ -198,6 +217,7 @@ public class Sorter {
                 array[i] = array[i-1];
                 array[i-1] = temp;
                 i--;
+                loopCount++;
             }
         }
     }
@@ -214,6 +234,7 @@ public class Sorter {
                 array[i] = array[i-1];
                 array[i-1] = temp;
                 i--;
+                loopCount++;
             }
         }
     }
@@ -251,6 +272,7 @@ public class Sorter {
                 array[i] = array[j];
                 array[j] = temp;
             }
+            loopCount++;
         }
         int temp = array[i + 1];
         array[i + 1] = array[high];
@@ -293,6 +315,7 @@ public class Sorter {
                 array[i] = array[j];
                 array[j] = temp;
             }
+            loopCount++;
         }
         int temp = array[i + 1];
         array[i + 1] = array[high];
@@ -344,9 +367,11 @@ public class Sorter {
         // Copy data to temp arrays
         for (int i = 0; i < n1; i++) {
             L[i] = array[low + i];
+            loopCount++;
         }
         for (int j = 0; j < n2; j++) {
             R[j] = array[mid + 1 + j];
+            loopCount++;
         }
 
         // Initial indexes of first and second subarrays
@@ -369,6 +394,7 @@ public class Sorter {
                 array[k] = R[j];
                 j++;
             }
+            loopCount++;
             k++;
         }
 
@@ -377,6 +403,7 @@ public class Sorter {
             array[k] = L[i];
             i++;
             k++;
+            loopCount++;
         }
 
         /* Copy remaining elements of R[] if any */
@@ -384,6 +411,7 @@ public class Sorter {
             array[k] = R[j];
             j++;
             k++;
+            loopCount++;
         }
 
     }
@@ -430,9 +458,11 @@ public class Sorter {
         // Copy data to temp arrays
         for (int i = 0; i < n1; i++) {
             L[i] = array[low + i];
+            loopCount++;
         }
         for (int j = 0; j < n2; j++) {
             R[j] = array[mid + 1 + j];
+            loopCount++;
         }
 
         // Initial indexes of first and second subarrays
@@ -456,6 +486,7 @@ public class Sorter {
                 j++;
             }
             k++;
+            loopCount++;
         }
 
         /* Copy remaining elements of L[] if any */
@@ -463,6 +494,7 @@ public class Sorter {
             array[k] = L[i];
             i++;
             k++;
+            loopCount++;
         }
 
         /* Copy remaining elements of R[] if any */
@@ -470,6 +502,7 @@ public class Sorter {
             array[k] = R[j];
             j++;
             k++;
+            loopCount++;
         }
 
     }
