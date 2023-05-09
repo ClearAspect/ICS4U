@@ -20,7 +20,7 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
     public static int[] smallArray;
     public static int[] bigArray;
     public static int[] usedArray;
-    public static Sorter sorter = new Sorter(true);
+    public static Sorter sorter = new Sorter(true); //instantiate the sorter
 
 
     /**
@@ -30,24 +30,31 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
        initComponents();
     }
 
+    /**
+     * Read the files that contain the values of the arrays to be sorted.
+     * @param path - String
+     * @return - Array of integers
+     */
     public static int[] readFile(String path) {
-        int[] numbers;
-        int length = 10;
-        if (path.contains("10000")) {
-            length = 10000;
+        int[] numbers; //array of numbers
+        int length = 10; //set the starting length of the array to be ten
+        if (path.contains("10000")) { //Check if the path contains "10000"
+            length = 10000; //set the length to be 10000 if true
         }
-        numbers = new int[length];
+        numbers = new int[length]; //instantiate the array
+        //Simply read the file with File class and Scanner class
+        
         try {
             File f = new File(path);
             Scanner s = new Scanner(f);
             for (int i = 0; i < numbers.length; i++) {
                 numbers[i] = Integer.parseInt(s.nextLine());
             }
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) { //if the file is not found print exception
             // TODO: handle exception
             System.out.println("Error: " + e);
         }
-        return numbers;
+        return numbers; //return the array
     }
 
     /**
@@ -254,21 +261,30 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
     private void sortBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_sortBtnActionPerformed
         // TODO add your handling code here:
 
+        // When the sort button is pressed,
+
+        //Check which array to use. Pass the reference of the correct array into the new array variable
         if (tenRBtn.isSelected()) {
             usedArray = smallArray;
         } else {
             usedArray = bigArray;
         }
+        
+        //Check to see which sort to use. If the array is ascending then set the sorter to be ascending
         if (ascendingRBtn.isSelected()) {
             sorter.setAscending();
         } else {
             sorter.setDescending();
         }
         
-        sort();
+        sort(); //Call the sort method
 
     }
     
+
+    /**
+     * 
+     */
     public void sort() {
         int[] bubbleSorted = usedArray.clone();
         int[] insertionSorted = usedArray.clone();
@@ -382,6 +398,7 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
             }
         });
 
+        //get the small and big arrays
         smallArray = readFile("src/masonsortingefficiencies/10nums.txt");
         bigArray = readFile("src/masonsortingefficiencies/10000nums.txt");
 
