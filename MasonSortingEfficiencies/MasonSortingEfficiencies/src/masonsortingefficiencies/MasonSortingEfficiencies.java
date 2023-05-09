@@ -1,13 +1,14 @@
 /*
 Roan Mason
 05/04/23
-
+Sorting Efficiencies Assignment
  */
 package masonsortingefficiencies;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -20,13 +21,14 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
     public static int[] bigArray;
     public static int[] usedArray;
     public static Sorter sorter = new Sorter(true);
+    public static DecimalFormat df = new DecimalFormat("#,###");
 
 
     /**
      * Creates new form MasonSortingEfficiencies
      */
     public MasonSortingEfficiencies() {
-        initComponents();
+       initComponents();
     }
 
     public static int[] readFile(String path) {
@@ -312,8 +314,8 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
         String currentResults = resultsTxt.getText();
         currentResults += 
         sortType
-        +":\nNumber of times a loop was executed: "+sorter.getLoopCount()
-        +"\nNumber of nanoseconds to complete sort: "+sorter.getNanoTime()+"\n";
+        +":\nNumber of times a loop was executed: "+df.format(sorter.getLoopCount())
+        +"\nNumber of nanoseconds to complete sort: "+df.format(sorter.getNanoTime())+"\n";
 
 
 

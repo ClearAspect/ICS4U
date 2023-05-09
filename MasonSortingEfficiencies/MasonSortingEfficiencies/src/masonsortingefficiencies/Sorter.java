@@ -39,13 +39,27 @@ public class Sorter {
     }
 
     /* State machines that check whether the sort should be in ascending or descending order  */
-    //Checks before algorithm is invoked so that there is no loss of speed/efficiency
+    /* 
+     * Sets the loop counter to zero to each algorithm can have the loops counted individually.
+     * 
+     * Check if the array is in ascending order, then call the correct method. If ascending then sort in ascending order
+     * 
+     * Before sorting, get the current nano time, then after sorting is done, get the current nano time again.
+     * If the user decides to request the nano time then the starting nano time will be subtracted from the finishing time
+     * then return to the user.
+     */
 
+    /**
+     * Selection sort method that will choose the correct order
+     * @param array - array being sorted
+     */
     public void selectionSort(int[] array) {
-        loopCount = 0;
+        loopCount = 0; // Reset loop counter
 
+        //Save the current nano time. If the array is in ascending order then call 
+        //the ascending selection sort method. Get the ending nano time.
         if (ascending) {
-            nanoStart = System.nanoTime();
+            nanoStart = System.nanoTime(); 
             ascendingSelectionSort(array);
             nanoEnd = System.nanoTime();
         } else {
@@ -55,9 +69,15 @@ public class Sorter {
         }
     }
 
+    /**
+     * Bubble sort method that will choose the correct order
+     * @param array - array being sorted
+     */
     public void bubbleSort(int[] array) {
-        loopCount = 0;
+        loopCount = 0; // Reset loop counter
         
+        //Save the current nano time. If the array is in ascending order then call 
+        //the ascending selection sort method. Get the ending nano time.
         if (ascending) {
             nanoStart = System.nanoTime();
             ascendingBubbleSort(array);
@@ -69,9 +89,15 @@ public class Sorter {
         }
     }
 
+    /**
+     * Insertion sort method that will choose the correct order
+     * @param array - array being sorted
+     */
     public void insertionSort(int[] array) {
-        loopCount = 0;
+        loopCount = 0; // Reset loop counter
         
+        //Save the current nano time. If the array is in ascending order then call 
+        //the ascending selection sort method. Get the ending nano time.
         if (ascending) {
             nanoStart = System.nanoTime();
             ascendingInsertionSort(array);
@@ -83,6 +109,9 @@ public class Sorter {
         }
     }
 
+    /**
+     * 
+     */
     public void quickSort(int[] array, int low, int high) {
         loopCount = 0;
         
