@@ -21,7 +21,6 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
     public static int[] bigArray;
     public static int[] usedArray;
     public static Sorter sorter = new Sorter(true);
-    public static DecimalFormat df = new DecimalFormat("#,###");
 
 
     /**
@@ -310,7 +309,8 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
         
     }
 
-    public void displayResults(String sortType) { 
+    public void displayResults(String sortType) {
+        DecimalFormat df = new DecimalFormat("#,###");
         String currentResults = resultsTxt.getText();
         currentResults += 
         sortType
