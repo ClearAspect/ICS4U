@@ -283,28 +283,37 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
     
 
     /**
-     * 
+     * Sorts the arrays and displays the results
      */
     public void sort() {
+        //Clone the original array being used so that it may be sorted by each method individually
         int[] bubbleSorted = usedArray.clone();
         int[] insertionSorted = usedArray.clone();
         int[] selectionSorted = usedArray.clone();
         int[] quickSorted = usedArray.clone();
         int[] mergeSorted = usedArray.clone();
 
+        //reset the results text screen
         resultsTxt.setText("");
 
+        //Actually method calls for sorting
+        //then add results of the sort to the text box
         sorter.bubbleSort(bubbleSorted);
         displayResults("Bubble Sort");
+
         sorter.insertionSort(insertionSorted);
         displayResults("Insertion Sort");
+
         sorter.selectionSort(selectionSorted);
         displayResults("Selection Sort");
+
         sorter.quickSort(quickSorted, 0, quickSorted.length - 1);
         displayResults("Quick Sort");
+
         sorter.mergeSort(mergeSorted, 0, mergeSorted.length - 1);
         displayResults("Merge Sort");
 
+        //Find which sorting method that the user requested and display the result of the sort to see if the array is in the correct order
         switch (sortTypeCombo.getSelectedIndex()) {
             case 0: //Bubble Sort
                 displayRequestedSort(bubbleSorted);
@@ -325,33 +334,43 @@ public class MasonSortingEfficiencies extends javax.swing.JFrame {
         
     }
 
+    /**
+     * Adds the loops and time to the results text box
+     * @param sortType - Name of sort type
+     */
     public void displayResults(String sortType) {
-        DecimalFormat df = new DecimalFormat("#,###");
-        String currentResults = resultsTxt.getText();
+        DecimalFormat df = new DecimalFormat("#,###"); //Number formatting 
+
+        String currentResults = resultsTxt.getText(); //Get the current text in the results box
+
+        //Add the new results to the current results
         currentResults += 
         sortType
         +":\nNumber of times a loop was executed: "+df.format(sorter.getLoopCount())
         +"\nNumber of nanoseconds to complete sort: "+df.format(sorter.getNanoTime())+"\n";
 
-
-
+        //Reset the results into the box with the updated information
         resultsTxt.setText(currentResults);
     }
 
+    /**
+     * Display the array sorted via the requested sort
+     * @param sortedArray - requested sorted array
+     */
     public void displayRequestedSort(int[] sortedArray) {
-        String arrayString = "";
-        String sortedArrayString = "";
+        String arrayString = ""; //Original array string 
+        String sortedArrayString = ""; //Sorted array string
 
+        //Loop through the array and add each element to the string
         for (int  i = 0; i < usedArray.length; i++) {
             arrayString += i + " : " +usedArray[i] + "\n";
             sortedArrayString += i + " : " + sortedArray[i] + "\n";
         }
+        //set the text of the boxes with the respective strings
         originalTxt.setText(arrayString);
         sortedTxt.setText(sortedArrayString);
 
     } 
-
-    
     
     
     
