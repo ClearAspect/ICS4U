@@ -10,35 +10,57 @@ package masonsortingefficiencies;
 public class Sorter {
 
     // Protected Class Variables
-    private boolean ascending = true;
-    private long nanoStart, nanoEnd;
-    private int loopCount;
+    private boolean ascending = true; // determines whether algorithm should be ascending or not
+    private long nanoStart, nanoEnd; //Time stamps between sort start/end
+    private int loopCount; //number of loops in a sort
 
+    /**
+     * Constructor that creates the sorter.
+     * @param ascending - a boolean
+     */
     public Sorter(boolean ascending) {
         this.ascending = ascending;
     }
 
+    /**
+     * Setter method that sets the ascending boolean
+     */
     public void setAscending() {
         this.ascending = true;
     }
 
+    /**
+     * Setter method that sets the descending boolean
+     */
     public void setDescending() {
         this.ascending = false;
     }
 
+    /**
+     * Getter method that returns the ascending boolean
+     * @return - boolean
+     */
     public boolean isAscending() {
         return ascending;
     }
 
+    /**
+     * Getter method that returns the time it took for the algorithm to sort in nano seconds
+     * @return - long
+     */
     public long getNanoTime() {
         return nanoEnd - nanoStart;
     }
 
+    /**
+     * Getter method that returns the number of loops in a sort
+     * @return
+     */
     public int getLoopCount() {
         return loopCount;
     }
 
-    /* State machines that check whether the sort should be in ascending or descending order  */
+    /* Sorting method calls that determine whether the algorithm should be ascending or not.  */
     /* 
      * Sets the loop counter to zero to each algorithm can have the loops counted individually.
      * 
@@ -110,11 +132,16 @@ public class Sorter {
     }
 
     /**
-     * 
+     * Quick sort method that will choose the correct order
+     * @param array - array being sorted
+     * @param low - low index of the array
+     * @param high - high index of the array
      */
     public void quickSort(int[] array, int low, int high) {
-        loopCount = 0;
-        
+        loopCount = 0; // Reset loop counter
+       
+        //Save the current nano time. If the array is in ascending order then call 
+        //the ascending selection sort method. Get the ending nano time.
         if (ascending) {
             nanoStart = System.nanoTime();
             ascendingQuickSort(array, low, high);
@@ -126,9 +153,17 @@ public class Sorter {
         }
     }
     
+    /**
+     * Merge sort method that will choose the correct order
+     * @param array - array being sorted
+     * @param low - low index of the array
+     * @param high - high index of the array
+     */
     public void mergeSort(int[] array, int low, int high) {
-        loopCount = 0;
+        loopCount = 0; // Reset loop counter
         
+        //Save the current nano time. If the array is in ascending order then call 
+        //the ascending selection sort method. Get the ending nano time.
         if (ascending) {
             nanoStart = System.nanoTime();
             ascendingMergeSort(array, low, high);
@@ -142,22 +177,25 @@ public class Sorter {
 
     /* Sorting Methods */
 
+    //Selection sort
+
     /**
-     * Selection Sorting Method
+     * Ascending Selection Sorting Method
      * @param array - Array to be sorted
      */
     private void ascendingSelectionSort(int[] array) {
-        int size = array.length;
+        int size = array.length; //Get the length of the array
 
-        for (int step = 0; step < size - 1; step++) {
-            int minIndex = step;
+        for (int step = 0; step < size - 1; step++) { //Loop through the array
+            int minIndex = step; //The minimum index is the current index of the loop
 
-            for (int i = step + 1; i < size; i++) {
-                if (array[i] < array[minIndex]) {
-                    minIndex = i;
+            for (int i = step + 1; i < size; i++) { //Loop through the array starting at the minimum index
+                if (array[i] < array[minIndex]) { //Check if the current index is less than the minimum index
+                    minIndex = i; //If so, then the minimum index is the current index
                 }
-                loopCount++;
+                loopCount++; //Increment loop counter
             }
+            //Swap the minimum index with index of the new smallest number found
             int temp = array[step];
             array[step] = array[minIndex];
             array[minIndex] = temp;
@@ -176,7 +214,7 @@ public class Sorter {
             int minIndex = step;
 
             for (int i = step + 1; i < size; i++) {
-                if (array[i] > array[minIndex]) {
+                if (array[i] > array[minIndex]) { //Swapped less-than operator to greater-than operator to make the algorithm descending
                     minIndex = i;
                 }
                 loopCount++;
@@ -188,26 +226,32 @@ public class Sorter {
         }
     }
 
+    //Bubble sort
+
     /**
      * Ascending Bubble Sorting Method
      * @param array - Array to be sorted
      */
     private void ascendingBubbleSort(int[] array) {
-        int bottom = array.length - 1;
-        boolean swapped = true;
+        int bottom = array.length - 1; //Set the bottom index to the length of the array
+        boolean swapped = true; //Set the boolean to true to start the loop
 
-        while (swapped) {
-            swapped = false;
-            for (int i = 0; i < bottom; i++) {
-                if (array[i] > array[i + 1]) {
-                    int temp = array[i];
+        while (swapped) { //While indexes continue to be swapped
+            swapped = false; //Set the boolean to false because nothing has been swapped yet
+            for (int i = 0; i < bottom; i++) { //Loop through the array
+                if (array[i] > array[i + 1]) { //If two consecutive indexes are out of order then swap them
+                    //Swap the indexes/numbers
+                    int temp = array[i]; 
                     array[i] = array[i + 1];
                     array[i + 1] = temp;
-                    swapped = true;
+                    
+                    swapped = true; //Set boolean to true because indexes having swapped. Must check to see if anything else needs to be swapped
                 }
-                loopCount++;
+                loopCount++; //Increment loop counter
+            
             }
-            bottom--;
+            bottom--; //Decrement the bottom index because the last index has been checked and swapped if needed
+        
         }
     }
 
@@ -222,10 +266,11 @@ public class Sorter {
         while (swapped) {
             swapped = false;
             for (int i = 0; i < bottom; i++) {
-                if (array[i] < array[i + 1]) {
+                if (array[i] < array[i + 1]) { //Swapped greater-than operator to less-than operator to make the algorithm descending
                     int temp = array[i];
                     array[i] = array[i + 1];
                     array[i + 1] = temp;
+
                     swapped = true;
                 }
                 loopCount++;
@@ -234,19 +279,24 @@ public class Sorter {
         }
     }
 
+    //Insertion sort
+
     /**
      * Ascending Insertion Sorting Method
      * @param array - Array to be sorted
      */
     private void ascendingInsertionSort(int[] array) {
-        int size = array.length;
-        for (int i = 0; i < size; i++) {
-            while (i > 0 && array[i-1] > array[i]) {
+        int size = array.length; //get the length of the array
+
+        for (int i = 0; i < size; i++) { //Loop through the array
+            while (i > 0 && array[i-1] > array[i]) { //While the current index is greater than zero, Check if current index's value is less than the previous
+                //Swap the two indexes/numbers
                 int temp = array[i];
                 array[i] = array[i-1];
                 array[i-1] = temp;
-                i--;
-                loopCount++;
+
+                i--; //Decrement the index to check the next index
+                loopCount++; //Increment loop counter
             }
         }
     }
@@ -258,7 +308,7 @@ public class Sorter {
     private void descendingInsertionSort(int[] array) {
         int size = array.length;
         for (int i = 0; i < size; i++) {
-            while (i > 0 && array[i-1] < array[i]) {
+            while (i > 0 && array[i-1] < array[i]) { //Swapped greater-than operator to less-than operator to make the algorithm descending
                 int temp = array[i];
                 array[i] = array[i-1];
                 array[i-1] = temp;
@@ -268,6 +318,8 @@ public class Sorter {
         }
     }
 
+    //Quick sort
+
     /**
      * Ascending Recursive Quick Sorting Method
      * @param array - Array to be sorted
@@ -275,10 +327,13 @@ public class Sorter {
      * @param high - Highest index of the array
      */
     private void ascendingQuickSort(int[] array, int low, int high) {
-        if (low < high) {
+        if (low < high) { //if the lowest index is less than the highest index continue to sort
+            //pi is the location of the pivot. Everything smaller than the pivot is on the left of the pivot
             int pi = ascendingPartition(array, low, high);
 
+            //Sort the left side of the pivot
             ascendingQuickSort(array, low, pi - 1);
+            //Sort the right side of the pivot
             ascendingQuickSort(array, pi + 1, high);
         }
     }
@@ -291,23 +346,31 @@ public class Sorter {
      * @return - Position of the pivot
      */
     private int ascendingPartition(int[] array, int low, int high) {
-        int pivot = array[high];
-        int i = low - 1;
+        int pivot = array[high]; //pivot is on the right-most index being checked
+        int i = low - 1; //i is the index of the left-most index being checked
 
-        for (int j = low; j < high; j++) {
-            if (array[j] <= pivot) {
+        for (int j = low; j < high; j++) { //Loop through the array being checked
+            if (array[j] <= pivot) { //if this index of the array is less than the pivot
                 i++;
+
+                //Swap the element i with element j because j is smaller than the pivot
                 int temp = array[i];
                 array[i] = array[j];
                 array[j] = temp;
             }
-            loopCount++;
+            loopCount++; //increment loop counter
         }
+
+        //Everything smaller than the pivot is on the left of the pivot
+        //Everything greater than the pivot is on the right of the pivot
+
+
+        //Swap the element of the pivot with element of i 
         int temp = array[i + 1];
         array[i + 1] = array[high];
         array[high] = temp;
 
-        // return the position from where partition is done
+        // return the position from where partition is done (Pivot location)
         return (i + 1);
     }
 
@@ -338,7 +401,7 @@ public class Sorter {
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (array[j] >= pivot) {
+            if (array[j] >= pivot) { //swapped less-than or equal to operator with greater-than operator to make the algorithm descending
                 i++;
                 int temp = array[i];
                 array[i] = array[j];
@@ -354,6 +417,8 @@ public class Sorter {
         return (i + 1);
     }
 
+    //Merge Sort
+
     /**
      * Ascending Recursive Merge Sorting Method
      * @param array - Array to be sorted
@@ -365,12 +430,11 @@ public class Sorter {
             // Find the middle point
             int m = low + (high - low) / 2;
 
-            // Splitting the array into halve continously until the arrays are one index
-            // long
+            // Splitting the array into halve continuously until the arrays are one index long
             ascendingMergeSort(array, low, m);
             ascendingMergeSort(array, m + 1, high);
 
-            // once no more can be split then start merging the smallest arrays
+            // Once no more can be split then start merging the smallest arrays
 
             // Merge the sorted halves
             ascendingMergeHalves(array, low, m, high);
@@ -385,15 +449,16 @@ public class Sorter {
      * @param high - Highest index of the array
      */
     private void ascendingMergeHalves(int array[], int low, int mid, int high) {
-        // Find sizes of two subarrays to be merged
+        // Find sizes of two sub-arrays to be merged
         int n1 = mid - low + 1;
         int n2 = high - mid;
 
-        // Create temp arrays
+        // Create temp arrays left and right
         int L[] = new int[n1];
         int R[] = new int[n2];
 
         // Copy data to temp arrays
+        // loop through initial array
         for (int i = 0; i < n1; i++) {
             L[i] = array[low + i];
             loopCount++;
@@ -409,8 +474,7 @@ public class Sorter {
         // Initial index of merged subarray array
         int k = low;
 
-        // Actual merge. Basically, look where you are in the arrays, if you havent made
-        // it to the end then continue.
+        // Actual merge. Basically, look where you are in the arrays, if you havent made it to the end then continue.
         // Check to see which value is smaller, the move that into the new sorted array.
         // If you have reached the end of one array, copy the rest of the other array
         // into the sorted array.
@@ -423,24 +487,24 @@ public class Sorter {
                 array[k] = R[j];
                 j++;
             }
-            loopCount++;
+            loopCount++; //increment loop counter
             k++;
         }
 
-        /* Copy remaining elements of L[] if any */
+        // Copy remaining elements of L[] if any
         while (i < n1) {
             array[k] = L[i];
             i++;
             k++;
-            loopCount++;
+            loopCount++; //increment loop counter
         }
 
-        /* Copy remaining elements of R[] if any */
+        // Copy remaining elements of R[] if any
         while (j < n2) {
             array[k] = R[j];
             j++;
             k++;
-            loopCount++;
+            loopCount++; //increment loop counter
         }
 
     }
@@ -453,17 +517,11 @@ public class Sorter {
      */
     private void descendingMergeSort(int array[], int low, int high) {
         if (low < high) {
-            // Find the middle point
             int m = low + (high - low) / 2;
 
-            // Splitting the array into halve continously until the arrays are one index
-            // long
             descendingMergeSort(array, low, m);
             descendingMergeSort(array, m + 1, high);
 
-            // once no more can be split then start merging the smallest arrays
-
-            // Merge the sorted halves
             descendingMergeHalves(array, low, m, high);
         }
     }
@@ -476,15 +534,12 @@ public class Sorter {
      * @param high - Highest index of the array
      */
     private void descendingMergeHalves(int array[], int low, int mid, int high) {
-        // Find sizes of two subarrays to be merged
         int n1 = mid - low + 1;
         int n2 = high - mid;
 
-        // Create temp arrays
         int L[] = new int[n1];
         int R[] = new int[n2];
 
-        // Copy data to temp arrays
         for (int i = 0; i < n1; i++) {
             L[i] = array[low + i];
             loopCount++;
@@ -494,20 +549,12 @@ public class Sorter {
             loopCount++;
         }
 
-        // Initial indexes of first and second subarrays
         int i = 0, j = 0;
 
-        // Initial index of merged subarray array
         int k = low;
 
-        // Actual merge. Basically, look where you are in the arrays, if you havent made
-        // it to the end then continue.
-        // Check to see which value is smaller, the move that into the new sorted array.
-        // If you have reached the end of one array, copy the rest of the other array
-        // into the sorted array.
-
         while (i < n1 && j < n2) {
-            if (L[i] >= R[j]) {
+            if (L[i] >= R[j]) { //Swapped less-than or equal to operator with greater-than operator to make the algorithm descending
                 array[k] = L[i];
                 i++;
             } else {
@@ -518,7 +565,6 @@ public class Sorter {
             loopCount++;
         }
 
-        /* Copy remaining elements of L[] if any */
         while (i < n1) {
             array[k] = L[i];
             i++;
@@ -526,7 +572,6 @@ public class Sorter {
             loopCount++;
         }
 
-        /* Copy remaining elements of R[] if any */
         while (j < n2) {
             array[k] = R[j];
             j++;
