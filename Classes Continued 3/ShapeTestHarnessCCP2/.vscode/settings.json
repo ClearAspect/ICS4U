@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/roanm/Documents/Computer Science/Saved Java Packages/packageFolder/TurtleGraphics.jar",
+        "/Users/roanm/Documents/Computer Science/Saved Java Packages/**/*.jar"
+    ]
+}
